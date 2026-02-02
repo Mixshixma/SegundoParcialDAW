@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Éxito! - Anuncio Publicado</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="text-center">
+        <div class="card shadow border-0 p-5 bg-white">
+            <div class="mb-4">
+                <h1 class="display-5 text-success">¡Anuncio Publicado! 🎉</h1>
+                <p class="lead">Tu cartel ya está en el tablón.</p>
+            </div>
+
+            <div id="token-container" style="display: none;">
+                <div class="alert alert-warning border-dark d-inline-block p-4">
+                    <h4 class="alert-heading">🔑 Código de Gestión</h4>
+                    <p>Usa este código para editar o borrar tu anuncio:</p>
+                    <div class="bg-dark text-white rounded p-3 mb-2">
+                        <span id="token-display" class="h2 font-monospace"></span>
+                    </div>
+                    <p class="small text-muted mb-0">¡Cópialo ahora! No se volverá a mostrar en esta sesión.</p>
+                </div>
+            </div>
+
+            <div id="error-container" style="display: none;">
+                <div class="alert alert-danger">
+                    No se pudo recuperar el token. Si necesitas borrar el anuncio, contacta a soporte.
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="carteles.html" class="btn btn-outline-primary">Ver todos los carteles</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Al cargar la página, buscamos el token guardado por validaciones.js
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('ultimo_token');
+        
+        const tokenContainer = document.getElementById('token-container');
+        const tokenDisplay = document.getElementById('token-display');
+        const errorContainer = document.getElementById('error-container');
+
+        if (token) {
+            tokenDisplay.textContent = token;
+            tokenContainer.style.display = 'block';
+            
+            // Opcional: Borrar el token del storage después de mostrarlo 
+            // para que no se quede ahí para siempre (punto 9: consideraciones finales)
+            localStorage.removeItem('ultimo_token');
+        } else {
+            errorContainer.style.display = 'block';
+        }
+    });
+</script>
+
+</body>
+</html>

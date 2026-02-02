@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carteles - Ventas Anónimas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        .badge-category { position: absolute; top: 10px; right: 10px; z-index: 10; }
+        .price-tag { font-size: 1.25rem; font-weight: bold; color: #198754; }
+        .card-custom { border-radius: 15px; overflow: hidden; transition: transform 0.2s; }
+        .card-custom:hover { transform: translateY(-5px); }
+        .form-select-custom { border: 1px solid #dee2e6 !important; }
+    </style>
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Carteles Anónimos</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="index.html">Inicio</a>
+                <a class="nav-link active" href="carteles.html">Carteles</a>
+                <a class="nav-link" href="registrar.html">Publicar</a>
+                <a class="nav-link" href="soporte.html">Soporte</a>
+            </div>
+        </div>
+    </nav>
+
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="mb-4 d-flex justify-content-between align-items-center">
+            <h1>Carteles del Momento</h1>
+        </div>
+
+        <div class="card shadow-sm mb-5 bg-white p-4" style="border-radius: 15px; border: none;">
+            <form id="formFiltros" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="small text-uppercase fw-bold text-secondary mb-2">País</label>
+                    <select id="f_pais" name="f_pais" class="form-select form-select-custom">
+                        <option value="">Todos los países</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Ecuador">Ecuador</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="México">México</option>
+                        <option value="España">España</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="small text-uppercase fw-bold text-secondary mb-2">Categoría</label>
+                    <select id="f_cat" name="f_cat" class="form-select form-select-custom">
+                        <option value="">Todas las categorías</option>
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Hogar">Hogar</option>
+                        <option value="Moda">Moda</option>
+                        <option value="Salud">Salud</option>
+                        <option value="Hobby">Hobby</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="small text-uppercase fw-bold text-secondary mb-2">Estado</label>
+                    <select id="f_est" name="f_est" class="form-select form-select-custom">
+                        <option value="">Todos los estados</option>
+                        <option value="Nuevo">Nuevo</option>
+                        <option value="Usado">Usado</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100 fw-bold">Filtrar</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="contenedor-anuncios" class="row">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status"></div>
+                <p>Cargando anuncios...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const URL_BACKEND = "https://tu-app-en-render.com/app/controllers/AnuncioController.php";
+
+        // 1. FUNCIÓN PARA CARGAR ANUNCIOS
+        async function cargarAnuncios(filtros = "") {
+            const contenedor = document.getElementById('contenedor-anuncios');
+            try {
+                // Llamamos al controlador (acción 'leer' que debemos agregar al PHP)
+                const resp = await fetch(`${URL_BACKEND}?action=leer${filtros}`);
+                const anuncios = await resp.json();
+
+                if (anuncios.length === 0) {
+                    contenedor.innerHTML = '<div class="alert alert-warning text-center">No hay anuncios.</div>';
+                    return;
+                }
+
+                contenedor.innerHTML = ""; // Limpiar cargando
+                anuncios.forEach(anuncio => {
+                    const img = anuncio.imagen_url || "https://via.placeholder.com/300x200?text=Sin+Foto";
+                    contenedor.innerHTML += `
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm border-0 card-custom">
+                                <span class="badge bg-primary badge-category">${anuncio.categoria}</span>
+                                <img src="${img}" class="card-img-top" style="height: 200px; object-fit: contain; background: #f8f9fa;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-dark">${anuncio.titulo}</h5>
+                                    <div class="mb-2">
+                                        <span class="price-tag">$${parseFloat(anuncio.precio).toFixed(2)}</span>
+                                        <span class="badge bg-light text-dark border">${anuncio.estado}</span>
+                                    </div>
+                                    <p class="card-text text-secondary small">${anuncio.descripcion.substring(0, 100)}...</p>
+                                    <p class="small mb-0">📍 <strong>País:</strong> ${anuncio.pais}</p>
+                                </div>
+                                <div class="card-footer bg-transparent border-top-0 pb-3">
+                                    <div class="p-2 bg-light rounded mb-3 small text-truncate">
+                                        <b>Contacto:</b> ${anuncio.contacto}
+                                    </div>
+                                    <div class="btn-group w-100">
+                                        <a href="editar.html?id=${anuncio.id}" class="btn btn-outline-warning btn-sm">Editar</a>
+                                        <button onclick="borrarConToken(${anuncio.id})" class="btn btn-outline-danger btn-sm">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (e) {
+                contenedor.innerHTML = '<div class="alert alert-danger">Error al conectar con el servidor.</div>';
+            }
+        }
+
+        // 2. LÓGICA DE FILTROS
+        document.getElementById('formFiltros').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const f_pais = document.getElementById('f_pais').value;
+            const f_cat = document.getElementById('f_cat').value;
+            const f_est = document.getElementById('f_est').value;
+            
+            const params = `&f_pais=${f_pais}&f_cat=${f_cat}&f_est=${f_est}`;
+            cargarAnuncios(params);
+        });
+
+        // 3. LÓGICA DE BORRADO (REQUISITO 18)
+        async function borrarConToken(id) {
+            let token = prompt("Introduce el código de seguridad para borrar este anuncio:");
+            if (token) {
+                const formData = new FormData();
+                formData.append('id', id);
+                formData.append('token', token);
+
+                const resp = await fetch(`${URL_BACKEND}?action=eliminar`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const res = await resp.json();
+                
+                if(res.status === "success") {
+                    alert("Eliminado correctamente");
+                    cargarAnuncios(); // Recargar lista
+                } else {
+                    alert("Error: " + res.message);
+                }
+            }
+        }
+
+        // Carga inicial
+        window.onload = () => cargarAnuncios();
+    </script>
+</body>
+</html>

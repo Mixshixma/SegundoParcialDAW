@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte - Carteles Anónimos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Carteles Anónimos</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="index.html">Inicio</a>
+                <a class="nav-link" href="carteles.html">Carteles</a>
+                <a class="nav-link" href="registrar.html">Publicar</a>
+                <a class="nav-link active" href="soporte.html">Soporte</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2 class="mb-4">Centro de Ayuda y Soporte</h2>
+                <p class="text-muted mb-5">Consulta nuestras preguntas frecuentes antes de contactar con el equipo de moderación.</p>
+
+                <div class="accordion mb-5" id="accordionFAQ">
+                    
+                    <div class="accordion-item shadow-sm">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                ¿Qué es el Token y por qué es tan importante?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body text-secondary">
+                                El <strong>Token</strong> es una clave alfanumérica única generada al crear tu anuncio. Al no tener cuentas de usuario, el token es la única forma de demostrar que eres el dueño del cartel para poder editarlo o borrarlo. <strong>Si lo pierdes, el anuncio permanecerá hasta que culmine su fecha de caducidad.</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item shadow-sm">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                ¿Cuánto tiempo dura mi anuncio publicado?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body text-secondary">
+                                El tiempo máximo es de 7 días. Pasado esos dias, un administrador eliminará su anuncio de nuestra base de datos para mantener el tablón actualizado.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item shadow-sm">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                ¿Puedo extender mi anuncio?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body text-secondary">
+                                Para que su anuncio siga vigente en nuestra página usted puede hacer un pago contactándose con el correo de soporte.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item shadow-sm">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                ¿Cómo puedo contactarme para recibir nuevamente el token?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                            <div class="accordion-body text-secondary">
+                                Para volver a recibir su token tiene que escribirnos detalladamente a través del correo de soporte la hora y fecha exacta en que publicó su cartel. Caso contrario, su petición será ignorada.
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <div class="card bg-white border-0 shadow-sm p-4 mt-4">
+                    <h4 class="fw-bold">¿Aún necesitas ayuda?</h4>
+                    <p>Si tienes problemas técnicos o quieres reportar un anuncio fraudulento, escríbenos:</p>
+                    <div class="d-flex flex-column gap-2">
+                        <span>📧 <strong>Soporte:</strong> soporte@ventas-anonimas.com</span>
+                        <span>🛡️ <strong>Denuncias:</strong> moderacion@ventas-anonimas.com</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

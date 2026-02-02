@@ -1,0 +1,80 @@
+/* public/css/estilos.css */
+body {
+    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+
+/* Ajustamos la Navbar para que sea el contenedor oscuro */
+.navbar {
+    background-color: #212529; /* El color oscuro de tu imagen */
+    border-bottom: 3px solid #ffc107; 
+    padding: 0; /* Importante para que las fichas lleguen al borde */
+    width: 100%; /* Asegura que ocupe el ancho total */
+    margin: 0;   /* Elimina cualquier margen externo */
+}
+
+/* Estilo base para todos los enlaces del nav */
+.navbar-nav .nav-link {
+    color: #ffffff; 
+    padding: 15px 25px; /* Más espacio para que se vea profesional */
+    margin: 0; /* Quitamos márgenes para que las fichas estén juntas */
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 0; /* Cuadradas como pediste */
+    font-weight: 500;
+}
+
+/* El efecto de "Ficha Seleccionada" (Cuadrada y limpia) */
+.navbar-nav .nav-link.active {
+    background-color: #ffc107 !important; /* Blanco puro para resaltar */
+    color: #212529 !important;           /* Texto oscuro */
+    font-weight: bold;
+    /* Quitamos los bordes raros y usamos una sombra sutil si quieres, 
+       o simplemente el contraste de color */
+    box-shadow: none; 
+    position: relative;
+}
+
+/* Efecto hover suave para las que no están activas */
+.navbar-nav .nav-link:hover:not(.active) {
+    background-color: #343a40; /* Un gris un poco más claro que el fondo */
+    color: #ffc107; /* El amarillo de tu marca para el texto en hover */
+}
+
+/* --- El resto de tu CSS se mantiene igual --- */
+.card {
+    transition: transform 0.3s;
+    border: none;
+    border-radius: 15px;
+}
+
+/* Botón estilo "Ficha Seleccionada" (Amarillo) */
+.btn-primary {
+    background-color: #ffc107 !important; /* El mismo amarillo de tu Navbar */
+    color: #212529 !important;           /* Texto oscuro para contraste */
+    border: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+/* Efecto al pasar el mouse sobre el botón */
+.btn-primary:hover {
+    background-color: #e0a800 !important; /* Un amarillo un poco más oscuro */
+    color: #000000 !important;
+}
+ 
+.mask-img {
+    width: 200px; /* Tamaño ideal para que destaque sin ser gigante */
+    height: auto;
+    /* Un filtro sutil para que resalte sobre el fondo gris */
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+    transition: transform 0.4s ease;
+}
+
+#loading {
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 20px 0;
+}

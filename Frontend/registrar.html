@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publicar Anuncio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+    <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Carteles Anónimos</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="index.html">Inicio</a>
+                <a class="nav-link" href="carteles.html">Carteles</a>
+                <a class="nav-link active" href="registrar.html">Publicar</a>
+                <a class="nav-link" href="soporte.html">Soporte</a>
+            </div>
+        </div>
+    </nav>
+
+<div class="container mt-4">
+    <div class="card shadow-sm p-4">
+        <h2 class="mb-4">Publicar Anuncio Anónimo</h2>
+        
+        <form id="formAnuncio">
+            
+            <div class="mb-3">
+                <label class="form-label fw-bold">Título del Producto</label>
+                <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Ej. Bicicleta de montaña" required>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Categoría</label>
+                    <select name="categoria" class="form-select">
+                        <option value="Tecnología">Tecnología</option>
+                        <option value="Hogar">Hogar</option>
+                        <option value="Moda">Moda</option>
+                        <option value="Salud">Salud</option>
+                        <option value="Hobby">Hobby</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Precio ($)</label>
+                    <input type="number" step="0.01" name="precio" id="precio" class="form-control" placeholder="0.00" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Estado</label>
+                    <select name="estado" class="form-select">
+                        <option value="Nuevo">Nuevo</option>
+                        <option value="Usado" selected>Usado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Descripción</label>
+                <textarea name="descripcion" id="descripcion" class="form-control" rows="4" placeholder="Describe brevemente lo que vendes..." required></textarea>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">País</label>
+                    <select name="pais" id="pais" class="form-select" required>
+                        <option value="" disabled selected>Selecciona tu país</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Bolivia">Bolivia</option>
+                        <option value="Chile">Chile</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Ecuador">Ecuador</option>
+                        <option value="México">México</option>
+                        <option value="Perú">Perú</option>
+                        <option value="España">España</option>
+                        </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Contacto</label>
+                    <input type="text" name="contacto" id="contacto" class="form-control" placeholder="Número o Correo Electrónico" required>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Enlace de la Foto</label>
+                <input type="url" name="imagen_url" id="imagen_url" class="form-control" placeholder="https://ejemplo.com/foto.jpg">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 fw-bold py-2 shadow-sm">Publicar Ahora</button>
+            
+            <div class="text-center mt-3">
+                <p class="small text-muted">Al publicar, se generará un código de seguridad para gestionar tu anuncio.</p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/validaciones.js"></script>
+</body>
+</html>
