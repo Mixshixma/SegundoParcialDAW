@@ -8,22 +8,16 @@ class Database {
     private $port = "18850"; // El puerto que te asigne Aiven
     public $conn;
 
-    public function getConnection() {
-        $this->conn = null;
-        try {
-            // Es vital incluir el puerto (port) en la cadena DSN
-            $this->conn = new PDO("mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name, $this->username, $this->password);
-            
-            // Esto ayuda a evitar errores de caracteres especiales
-            $this->conn->exec("set names utf8");
-            
-            // Opcional: Esto ayuda si Render tiene problemas con el certificado SSL de Aiven
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        } catch(PDOException $exception) {
-            echo "Error de conexión: " . $exception->getMessage();
-        }
-        return $this->conn;
+ public function getConnection() {
+    // Modificación sugerida dentro de getConnection()
+    $this->conn = new PDO(
+    "mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name, 
+    $this->username, 
+    $this->password,
+    array(
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false, // Útil si hay líos con certificados en Render
+    )
+);
     }
 }
 ?>
