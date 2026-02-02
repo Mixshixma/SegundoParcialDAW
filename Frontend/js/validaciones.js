@@ -15,7 +15,7 @@ document.getElementById('formAnuncio').addEventListener('submit', async function
     const formData = new FormData(this);
     
     // Aquí pondrás la URL que te asigne Render al desplegar tu PHP
-    const urlBackend = "https://anuncios-php.onrender.com//app/controllers/AnuncioController.php?action=crear";
+    const urlBackend = "https://anuncios-php.onrender.com/app/controllers/AnuncioController.php?action=crear";
 
     try {
         const response = await fetch(urlBackend, {
@@ -38,4 +38,5 @@ document.getElementById('formAnuncio').addEventListener('submit', async function
     }
 
 });
+
 
