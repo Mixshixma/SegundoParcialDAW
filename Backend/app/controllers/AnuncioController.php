@@ -6,6 +6,15 @@ header("Access-Control-Allow-Methods: POST, GET");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 session_start();
+// Si $_POST está vacío, intentamos leer el cuerpo de la petición (JSON)
+if (empty($_POST)) {
+    $json = file_get_contents('php://input');
+    $data = json_decode($json, true);
+    if ($data) {
+        $_POST = $data;
+    }
+}
+
 require_once __DIR__ . '/../../config/db.php';
 require_once __DIR__ . '/../models/Anuncio.php';
 
@@ -117,4 +126,5 @@ else if ($action == 'detalle') {
     $stmt->execute();
     echo json_encode($stmt->fetch(PDO::FETCH_ASSOC));
 }
+
 ?>
