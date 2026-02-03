@@ -30,22 +30,25 @@ document.getElementById('formAnuncio').addEventListener('submit', async function
 
     try {
         const response = await fetch(urlBackend, {
-            method: 'POST',
-            body: formData
-        });
+        method: 'POST',
+        body: formData
+    });
 
-        if (!response.ok) throw new Error("Error en la respuesta del servidor");
+    // Diagnóstico: Vamos a ver qué respondió el servidor antes de intentar convertirlo a JSON
+    const text = await response.text(); 
+    console.log("Respuesta bruta del servidor:", text);
 
-        const data = await response.json();
+    // Intentamos convertir ese texto a JSON manualmente
+    const data = JSON.parse(text);
 
-        if (data.status === "success") {
-            alert("¡Anuncio actualizado con éxito!");
-            window.location.href = "carteles.html"; // Te manda a ver todos los carteles
-        } else {
-            alert("Error: " + data.message);
-        }
-    } catch (error) {
-        console.error("Error detallado:", error);
-        alert("Hubo un fallo al conectar con el servidor, pero revisa si los cambios se guardaron.");
+    if (data.status === "success") {
+        alert("¡Anuncio actualizado con éxito!");
+        window.location.href = "carteles.html";
+    } else {
+        alert("Error: " + data.message);
+    }
+} catch (error) {
+    console.error("Error al procesar la respuesta:", error);
+    alert("Error de conexión o formato de respuesta incorrecto.");
     }
 });
