@@ -130,4 +130,3 @@ else if ($action == 'detalle') {
 }
 
 ?>
-
