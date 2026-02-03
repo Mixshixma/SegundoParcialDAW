@@ -16,7 +16,7 @@
             <input type="hidden" name="id" id="anuncio_id">
             
             <div class="alert alert-info border-info mb-4">
-                <label class="form-label fw-bold">Introduce tu Token de Seguridad para guardar cambios:</label>
+                <label class="form-label fw-bold">Introduce tu Token de Seguridad:</label>
                 <input type="text" name="token_usuario" id="token_usuario" class="form-control" placeholder="Tu código secreto" required>
             </div>
 
@@ -33,7 +33,6 @@
                         <option value="Hogar">Hogar</option>
                         <option value="Moda">Moda</option>
                         <option value="Salud">Salud</option>
-                        <option value="Hobby">Hobby</option>
                         <option value="Otros">Otros</option>
                     </select>
                 </div>
@@ -59,12 +58,10 @@
                 <div class="col-md-6">
                     <label class="form-label fw-bold">País</label>
                     <select name="pais" id="pais" class="form-select">
-                        <option value="Argentina">Argentina</option>
                         <option value="Ecuador">Ecuador</option>
                         <option value="Colombia">Colombia</option>
                         <option value="México">México</option>
-                        <option value="España">España</option>
-                        </select>
+                    </select>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Contacto</label>
@@ -85,66 +82,6 @@
     </div>
 </div>
 
-<script>
-    const URL_BACKEND = "https://anuncios-php.onrender.com/app/controllers/AnuncioController.php";
-
-    // 1. OBTENER DATOS ACTUALES AL CARGAR
-    window.onload = async () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get('id');
-        
-        if (!id) {
-            alert("ID no encontrado");
-            window.location.href = "carteles.html";
-            return;
-        }
-
-        try {
-            // Debemos crear una acción 'detalle' en el PHP para traer un solo anuncio
-            const resp = await fetch(`${URL_BACKEND}?action=detalle&id=${id}`);
-            const data = await resp.json();
-
-            if (data) {
-                document.getElementById('anuncio_id').value = data.id;
-                document.getElementById('titulo').value = data.titulo;
-                document.getElementById('categoria').value = data.categoria;
-                document.getElementById('precio').value = data.precio;
-                document.getElementById('estado').value = data.estado;
-                document.getElementById('descripcion').value = data.descripcion;
-                document.getElementById('pais').value = data.pais;
-                document.getElementById('contacto').value = data.contacto;
-                document.getElementById('imagen_url').value = data.imagen_url;
-            }
-        } catch (e) {
-            alert("Error al cargar los datos del anuncio.");
-        }
-    };
-
-    // 2. ENVIAR CAMBIOS
-    document.getElementById('formEditar').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-
-        try {
-            const resp = await fetch(`${URL_BACKEND}?action=actualizar`, {
-                method: 'POST',
-                body: formData
-            });
-            const result = await resp.json();
-
-            if (result.status === "success") {
-                alert("Anuncio actualizado correctamente");
-                window.location.href = "carteles.html";
-            } else {
-                alert("Error: " + result.message);
-            }
-        } catch (e) {
-            alert("Error de conexión al guardar cambios.");
-        }
-    });
-</script>
-    <script src="js/editar.js"></script>
+<script src="js/editar.js"></script>
 </body>
-
 </html>
-
