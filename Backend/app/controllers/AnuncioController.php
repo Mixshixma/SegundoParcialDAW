@@ -129,4 +129,3 @@ else if ($action == 'detalle') {
 }
 
 ?>
-
