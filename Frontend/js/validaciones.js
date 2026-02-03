@@ -28,7 +28,7 @@ document.getElementById('formAnuncio').addEventListener('submit', async function
         if (data.status === "success") {
             // Guardamos el token para mostrarlo en la vista de éxito
             localStorage.setItem('ultimo_token', data.token);
-            window.location.href = "exito.html";
+            window.location.href = "token.html";
         } else {
             alert("Error del servidor: " + data.message);
         }
@@ -38,5 +38,6 @@ document.getElementById('formAnuncio').addEventListener('submit', async function
     }
 
 });
+
 
 
