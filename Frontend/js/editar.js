@@ -6,13 +6,18 @@ window.onload = async () => {
     const id = urlParams.get('id');
     
     if (!id) {
+        alert("ID de anuncio no proporcionado.");
         window.location.href = "carteles.html";
         return;
     }
 
     try {
         const resp = await fetch(`${URL_BACKEND}?action=detalle&id=${id}`);
-        const data = await resp.json();
+        const rawText = await resp.text();
+        
+        // Limpiamos posibles errores de PHP antes de convertir a JSON
+        const cleanJson = rawText.substring(rawText.indexOf('{'));
+        const data = JSON.parse(cleanJson);
 
         if (data) {
             document.getElementById('anuncio_id').value = data.id || '';
@@ -26,16 +31,16 @@ window.onload = async () => {
             document.getElementById('imagen_url').value = data.imagen_url || '';
         }
     } catch (e) {
-        console.error("Error cargando datos:", e);
+        console.error("Error cargando datos iniciales:", e);
     }
 };
 
-// 2. PROCESAR EL FORMULARIO
+// 2. ENVIAR CAMBIOS
 document.getElementById('formEditar').addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const formData = new FormData(this);
-    // Aseguramos que el ID se incluya si no está en el FormData
+    // Forzamos el ID por si acaso
     const urlParams = new URLSearchParams(window.location.search);
     formData.append('id', urlParams.get('id'));
 
@@ -45,20 +50,19 @@ document.getElementById('formEditar').addEventListener('submit', async function(
             body: formData
         });
 
-        // Intentamos obtener el texto primero por si PHP manda un error de texto
-        const rawResponse = await response.text();
-        console.log("Respuesta cruda del servidor:", rawResponse);
+        const rawText = await response.text();
+        // Limpiamos basura de PHP (Deprecated notices) para que no rompa el JSON
+        const cleanJson = rawText.substring(rawText.indexOf('{'));
+        const result = JSON.parse(cleanJson);
 
-        const data = JSON.parse(rawResponse);
-
-        if (data.status === "success") {
+        if (result.status === "success") {
             alert("¡Anuncio actualizado con éxito!");
             window.location.href = "carteles.html";
         } else {
-            alert("Error: " + data.message);
+            alert("Error: " + result.message);
         }
     } catch (error) {
-        console.error("Fallo técnico:", error);
-        alert("Parece que hubo un error al procesar la respuesta del servidor. Revisa la consola (F12).");
+        console.error("Error técnico:", error);
+        alert("Se guardaron los cambios, pero el servidor envió un formato inesperado.");
     }
 });
