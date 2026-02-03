@@ -15,15 +15,15 @@ window.onload = async () => {
         const data = await resp.json();
 
         if (data) {
-            document.getElementById('anuncio_id').value = data.id;
-            document.getElementById('titulo').value = data.titulo;
-            document.getElementById('categoria').value = data.categoria;
-            document.getElementById('precio').value = data.precio;
-            document.getElementById('estado').value = data.estado;
-            document.getElementById('descripcion').value = data.descripcion;
-            document.getElementById('pais').value = data.pais;
-            document.getElementById('contacto').value = data.contacto;
-            document.getElementById('imagen_url').value = data.imagen_url;
+            document.getElementById('anuncio_id').value = data.id || '';
+            document.getElementById('titulo').value = data.titulo || '';
+            document.getElementById('categoria').value = data.categoria || 'Tecnología';
+            document.getElementById('precio').value = data.precio || '';
+            document.getElementById('estado').value = data.estado || 'Nuevo';
+            document.getElementById('descripcion').value = data.descripcion || '';
+            document.getElementById('pais').value = data.pais || 'Ecuador';
+            document.getElementById('contacto').value = data.contacto || '';
+            document.getElementById('imagen_url').value = data.imagen_url || '';
         }
     } catch (e) {
         console.error("Error cargando datos:", e);
