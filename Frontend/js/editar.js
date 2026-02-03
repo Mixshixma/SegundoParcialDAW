@@ -1,54 +1,64 @@
-document.getElementById('formAnuncio').addEventListener('submit', async function(e) {
-    e.preventDefault();
+const URL_BACKEND = "https://anuncios-php.onrender.com/app/controllers/AnuncioController.php";
 
-    // 1. Obtener el ID del anuncio desde la URL (ejemplo: editar.html?id=5)
+// 1. CARGAR DATOS AL INICIAR
+window.onload = async () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const idAnuncio = urlParams.get('id');
-
-    // 2. Validaciones básicas
-    let titulo = document.getElementById('titulo').value;
-    let precio = document.getElementById('precio').value;
-    let contacto = document.getElementById('contacto').value;
-
-    if (titulo.trim() === "" || precio <= 0 || contacto.trim() === "") {
-        alert("Por favor, completa los campos obligatorios.");
+    const id = urlParams.get('id');
+    
+    if (!id) {
+        window.location.href = "carteles.html";
         return;
     }
 
-    // 3. Preparar los datos
-    const formData = new FormData(this);
-    
-    // IMPORTANTE: Agregamos manualmente el ID y el Token que el controlador PHP espera
-    formData.append('id', idAnuncio);
-    
-    // El token lo recuperamos de donde lo hayas guardado (ej. localStorage)
-    const tokenSeguridad = localStorage.getItem('ultimo_token');
-    formData.append('token_usuario', tokenSeguridad); 
+    try {
+        const resp = await fetch(`${URL_BACKEND}?action=detalle&id=${id}`);
+        const data = await resp.json();
 
-    // 4. URL apuntando a la acción de ACTUALIZAR
-    const urlBackend = "https://anuncios-php.onrender.com/app/controllers/AnuncioController.php?action=actualizar";
+        if (data) {
+            document.getElementById('anuncio_id').value = data.id;
+            document.getElementById('titulo').value = data.titulo;
+            document.getElementById('categoria').value = data.categoria;
+            document.getElementById('precio').value = data.precio;
+            document.getElementById('estado').value = data.estado;
+            document.getElementById('descripcion').value = data.descripcion;
+            document.getElementById('pais').value = data.pais;
+            document.getElementById('contacto').value = data.contacto;
+            document.getElementById('imagen_url').value = data.imagen_url;
+        }
+    } catch (e) {
+        console.error("Error cargando datos:", e);
+    }
+};
+
+// 2. PROCESAR EL FORMULARIO
+document.getElementById('formEditar').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    // Aseguramos que el ID se incluya si no está en el FormData
+    const urlParams = new URLSearchParams(window.location.search);
+    formData.append('id', urlParams.get('id'));
 
     try {
-        const response = await fetch(urlBackend, {
-        method: 'POST',
-        body: formData
-    });
+        const response = await fetch(`${URL_BACKEND}?action=actualizar`, {
+            method: 'POST',
+            body: formData
+        });
 
-    // Diagnóstico: Vamos a ver qué respondió el servidor antes de intentar convertirlo a JSON
-    const text = await response.text(); 
-    console.log("Respuesta bruta del servidor:", text);
+        // Intentamos obtener el texto primero por si PHP manda un error de texto
+        const rawResponse = await response.text();
+        console.log("Respuesta cruda del servidor:", rawResponse);
 
-    // Intentamos convertir ese texto a JSON manualmente
-    const data = JSON.parse(text);
+        const data = JSON.parse(rawResponse);
 
-    if (data.status === "success") {
-        alert("¡Anuncio actualizado con éxito!");
-        window.location.href = "carteles.html";
-    } else {
-        alert("Error: " + data.message);
-    }
-} catch (error) {
-    console.error("Error al procesar la respuesta:", error);
-    alert("Error de conexión o formato de respuesta incorrecto.");
+        if (data.status === "success") {
+            alert("¡Anuncio actualizado con éxito!");
+            window.location.href = "carteles.html";
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (error) {
+        console.error("Fallo técnico:", error);
+        alert("Parece que hubo un error al procesar la respuesta del servidor. Revisa la consola (F12).");
     }
 });
