@@ -95,14 +95,15 @@ class Anuncio {
 
     // Extendemos el sanitize para cumplir con la validación de backend 
     private function sanitize() {
-        $this->titulo = htmlspecialchars(strip_tags($this->titulo));
-        $this->categoria = htmlspecialchars(strip_tags($this->categoria));
-        $this->descripcion = htmlspecialchars(strip_tags($this->descripcion));
-        $this->precio = htmlspecialchars(strip_tags($this->precio));
-        $this->estado = htmlspecialchars(strip_tags($this->estado));
-        $this->pais = htmlspecialchars(strip_tags($this->pais));
-        $this->contacto = htmlspecialchars(strip_tags($this->contacto));
-        $this->imagen_url = htmlspecialchars(strip_tags($this->imagen_url));
+$this->titulo = htmlspecialchars(strip_tags($this->titulo ?? ''));
+    $this->categoria = htmlspecialchars(strip_tags($this->categoria ?? ''));
+    $this->descripcion = htmlspecialchars(strip_tags($this->descripcion ?? ''));
+    $this->precio = htmlspecialchars(strip_tags($this->precio ?? '0'));
+    $this->estado = htmlspecialchars(strip_tags($this->estado ?? ''));
+    $this->pais = htmlspecialchars(strip_tags($this->pais ?? ''));
+    $this->contacto = htmlspecialchars(strip_tags($this->contacto ?? ''));
+    $this->imagen_url = htmlspecialchars(strip_tags($this->imagen_url ?? ''))
     }
 }
+
 ?>
