@@ -103,6 +103,7 @@ else if ($action == 'actualizar') {
         }
     } else {
         echo json_encode(["status" => "error", "message" => "Token incorrecto."]);
+        exit;
     }
 }
 
@@ -129,3 +130,4 @@ else if ($action == 'detalle') {
 }
 
 ?>
+
