@@ -99,6 +99,7 @@ else if ($action == 'actualizar') {
         
         if ($anuncio->update()) {
             echo json_encode(["status" => "success", "message" => "Actualizado con éxito."]);
+            exit;
         }
     } else {
         echo json_encode(["status" => "error", "message" => "Token incorrecto."]);
@@ -128,3 +129,4 @@ else if ($action == 'detalle') {
 }
 
 ?>
+
